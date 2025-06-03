@@ -18,25 +18,24 @@ const error = ref("");
 const data = ref(null);
 
 const fetchData = async () => {
-  loading.value = true;
+  loading.value = true; // 분석 포인트 왜 ? why??
   error.value = "";
   data.value = null;
 
   try {
     const response = await fetch(
-      "https://jsonplaceholder.typicode.com/posts/9099"
-    ); // ← 404 에러!
+      "https://jsonplaceholder.typicode.com/posts/2"
+    ); // 분석포인트 2
 
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
     }
 
     data.value = await response.json();
-    loading.value = false; // ← finally 없이 여기서만 false
   } catch (err) {
     error.value = err.message;
-    // loading.value = false 없음! ← 이게 문제!
+  } finally {
+    loading.value = false; // 분석 포인트
   }
-  // finally 없음!
 };
 </script>
